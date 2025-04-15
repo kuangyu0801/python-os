@@ -130,3 +130,98 @@ print(extract_pid("99 elephants in a [cage]")) # None
 print(extract_pid("A string that also has numbers [34567] but no uppercase message")) # None
 print(extract_pid("July 31 08:08:08 mycomputer new_process[67890]: RUNNING Performing backup")) # 67890 (RUNNING)
 ```
+
+## Module-4: Managing Data and Processes
+
+I/O Stream
+
+stdin
+stdout
+stderr
+
+Environment Variable
+
+shell: program to interact with linux kernel. For example, bash, zsh
+
+```shell
+# print all environmental variable
+env
+
+echo $PATH
+```
+
+```python
+import os
+# fail with default value
+os.environ.get("HOME", "")
+```
+
+Command-Line Argument and Exit Status
+
+using CLA is better than `input` without iterative interaction
+
+```python
+import sys
+
+print(sys.argv)
+```
+
+Exit Status
+
+```shell
+
+# See the exit result
+echo $?
+```
+
+```python
+# when python fails with error, it exist with 1 by default.
+sys.exit(1)
+```
+
+### Python subprocess
+
+use case: run shell/system  command directly from python
+interface with external processes
+ run complex shell commands, or need precise control over input and output.
+drawback: depends on assumption in environment, which is suscetible to change
+
+rule of thumb: use subprocess with simple and quick task.
+
+Other advantages include:
+
+Subprocess can run any shell command, providing greater flexibility.
+
+Subprocess can capture stdout and stderr easily.
+
+```python
+import subprocess
+subprocess.run(["date"])
+```
+
+Parent process is blocked until child finishes.
+
+Pyhton treat input stream as byte and we need to decode it and UTF-8 by default.
+
+```python
+subprocess.run(, capture_output=True)
+result.stdout.decode().split()
+```
+
+Subprocess:
+
+cwd_subprocess = subprocess.check_output(['pwd'], text=True).strip()
+
+OS:
+
+cwd_os = os.getcwd()
+
+Pathlib:
+
+cwd_pathlib = Path.cwd()
+
+Run
+The .run() command is the recommended approach to invoking subprocesses. It runs the command, waits for it to complete, then returns a CompletedProcess instance that contains information about the process.
+
+Popen
+Popen() offers more advanced features compared to the previously mentioned functions. It allows you to spawn a new process, connect to its input/output/error pipes, and obtain its return code.
